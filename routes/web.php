@@ -14,3 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('social/index', function () {
+    return view('social.index');
+})->middleware('auth');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('social/admin', function () {
+    //
+})->middleware('admin');
+
+Route::post('social/post', 'PostController@submit_post')->name('post');
+
+Route::post('social/reaction', 'ReactionController@reaction')->name('like');
+
+Route::post('social/comment', 'CommentController@comment')->name('comment');
+
+Route::get('social/user/{name}', 'PostController@showPost')->name('show');
