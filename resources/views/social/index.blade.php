@@ -42,8 +42,8 @@
           Profile
          </a>
          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+         <a class="dropdown-item" href="{{ route('profile.create') }}">profile</a>
+            <a class="dropdown-item" href="#">Another actio</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
          </div>
@@ -85,19 +85,19 @@
 
 <div class="container flash">
 
-  <form class="form" method="POST" action="/social/post" enctype="multipart/form-data">  
-    
+  <form class="form" method="POST" action="/social/post" enctype="multipart/form-data">
+
     @csrf
-                
+
     <input class="form-control form-control-lg" type="text" id='bae' name="content" placeholder="What's on Your Mind ?">
-          
-    <input type="file" id="image" class="mt-4" name='post_image'> 
+
+    <input type="file" id="image" class="mt-4" name='post_image'>
 
     <input type="submit" name="submit_post"/>
-        
+
   </form>
-</div>  
-    
+</div>
+
 @include('social.test')
 
 

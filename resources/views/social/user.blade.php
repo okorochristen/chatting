@@ -19,10 +19,11 @@
 
       <li class="nav-item">
 
-       <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search for friends" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <form class="form-inline my-2 my-lg-0" method="POST" action='{{url("/profile/search")}}'>
+            @csrf
+              <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search for friends" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
       </li>
 
       <li class="nav-item">
@@ -39,19 +40,28 @@
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Profile
+            {{Auth::user()->name}}
        </a>
        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="{{ route('view', Auth::user()->id) }}">view profile</a>
+             <a class="dropdown-item" href="{{ route('edit', Auth::user()->id) }}">edit profile</a>
+             <a class="dropdown-item" href="{{ route('create', Auth::user()->id) }}">create profile</a>
+
+            <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('logout') }}"
+          onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+           {{ __('Logout') }}
+       </a>
+
+       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+           @csrf
+       </form>
        </div>
      </li>
     </ul>
   </div>
 </nav>
-
 
 <div class="prosper">
 
@@ -85,18 +95,18 @@
 
 <div class="container flash">
 
-  <form class="form" method="POST" action="/social/post" enctype="multipart/form-data">  
-    
+  <form class="form" method="POST" action="/social/post" enctype="multipart/form-data">
+
     @csrf
-                
+
     <input class="form-control form-control-lg" type="text" id='bae' name="content" placeholder="What's on Your Mind ?">
-          
-    <input type="file" id="image" class="mt-4" name='post_image'> 
+
+    <input type="file" id="image" class="mt-4" name='post_image'>
 
     <input type="submit" name="submit_post"/>
-        
+
   </form>
-</div>  
+</div>
 
 @if(count($show) > 0)
 
@@ -116,11 +126,11 @@ post from the database is passed with $post which was used to store it with the 
 
        <img src="{{asset('/img/love.jpg')}}" id="love">
 
-        
-      </div>  
-        
+
+      </div>
+
     </div>
-    
+
     <div class="col-6">
 
       <div class="card section">
@@ -138,19 +148,19 @@ post from the database is passed with $post which was used to store it with the 
                   ...</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <a class="dropdown-item" href="#">Action</a>
+
 
                     <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                   </div>
 
-              </ol>  
+              </ol>
 
-            </ul> 
+            </ul>
 
           </div>
-          
+
         </div>
 
         <div class="stage">
@@ -169,7 +179,7 @@ post from the database is passed with $post which was used to store it with the 
 
                 <ul class="list align-items-center">
 
-                      
+
                   <ol class="list-item">
 
                     <i class="far fa-hand-point-right pr-4" id="my-icon" class="like" name="like"></i>
@@ -204,25 +214,25 @@ post from the database is passed with $post which was used to store it with the 
 
                   <i class="far fa-comment-dots" id="icon" class="font-awesome" onclick="Visible()"></i>
 
-                </ol>      
+                </ol>
               </ul>
             </div>
 
             <form id="my-form" method="post" action="/social/comment">
               @csrf
-              
+
               <input class="form-control text-center" name="comments" type="text" placeholder="Comment">
 
               <input type="submit" id="submit-one" onclick="hide()" name="comment"/>
-                  
+
             </form>
-              
-            
+
+
           </div>
         </div>
 
       </div>
-    </div> 
+    </div>
 
 
    <div class="col-3">
@@ -230,14 +240,14 @@ post from the database is passed with $post which was used to store it with the 
      <div class="card">
      <img src="{{asset('/img/love.jpg')}}" id="love">
      </div>
-   
+
    </div>
 
 
-    
+
   </div>
 
-</div>    
+</div>
 
 @endforeach
 
@@ -247,4 +257,4 @@ post from the database is passed with $post which was used to store it with the 
 
 
 
-@endsection  
+@endsection
